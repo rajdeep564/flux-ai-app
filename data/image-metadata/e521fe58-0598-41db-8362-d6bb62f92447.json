@@ -1,0 +1,7 @@
+{
+  "id": "e521fe58-0598-41db-8362-d6bb62f92447",
+  "prompt": "Using the provided image  as a perfect reference, render a new image in ultra-high definition (UHD) 8K resolution. It is absolutely essential to maintain 100% fidelity to the person's facial structure, shape, features, and identity from [img1]; do not alter their likeness in any way. For the new scene, place the subject in a modern, minimalist rooftop lounge at twilight with a soft-focus, blurred cityscape background featuring beautiful bokeh lights. Dress the subject in a sophisticated, well-fitted dark navy blazer over a crisp, open-collar white shirt. Use cinematic, soft key lighting that highlights the facial features naturally and casts subtle, flattering shadows. The final output should be a photorealistic, hyper-detailed professional portrait. Avoid digital artifacts, plastic-looking skin, blurry details, distorted features, or any alteration to the facial identity",
+  "model": "flux-kontext-max",
+  "aspectRatio": "1:1",
+  "timestamp": "2025-07-22T15:00:27.268Z"
+}

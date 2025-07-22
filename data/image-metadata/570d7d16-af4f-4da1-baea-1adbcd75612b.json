@@ -1,0 +1,7 @@
+{
+  "id": "570d7d16-af4f-4da1-baea-1adbcd75612b",
+  "prompt": "Create a hyper-realistic, oil-on-canvas style portrait in the richly textured aesthetic of 19th-century Indian masters like Raja Ravi Varma, set in a dimly lit, ornate palace chamber in Ahmedabad. Use the attached image as an absolute, non-negotiable reference for Subject 1’s face — preserve the exact facial structure, features, expression, and identity with no deviation; it must be a flawless 1:1 likeness. Dress Subject 1 in a custom deep velvet sherwani with fine gold thread embroidery at the collar and cuffs, catching warm highlights. Beside him, place an elegant Indian woman in a deep emerald Banarasi silk saree with a heavy gold zari border, adorned with classic jhumka earrings and a subtle gold necklace. The setting includes a carved wooden arch and a partially shadowed jharokha window, evoking the regal architecture of a traditional Gujarati haveli. Illuminate the scene using a single, soft, directional light from the side in the style of Rembrandt's Chiaroscuro — emphasizing shadows, texture, and emotional depth. The result must feel like a real oil painting: rich impasto brushwork, visible canvas texture, and painterly depth — never flat, artificial, or digitally rendered.",
+  "model": "flux-kontext-max",
+  "aspectRatio": "1:1",
+  "timestamp": "2025-07-22T15:22:02.721Z"
+}

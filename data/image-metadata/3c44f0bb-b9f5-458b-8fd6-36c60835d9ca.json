@@ -1,0 +1,7 @@
+{
+  "id": "3c44f0bb-b9f5-458b-8fd6-36c60835d9ca",
+  "prompt": "Paint a majestic 19th-century-style oil portrait in the aesthetic of Raja Ravi Varma, depicting two figures in a dimly lit, regal palace chamber in Ahmedabad. Subject 1 must be painted using the provided input image as an absolute reference—ensure a flawless 1:1 match in facial structure, expression, skin tone, and identity, maintaining the highest quality and realism. Dress him in a dark velvet sherwani with refined gold-thread embroidery along the collar and cuffs, subtly catching warm side lighting. Beside him, place a poised Indian woman in a deep emerald Banarasi silk saree with a wide gold zari border, wearing traditional jhumka earrings and a soft gold necklace. Set them inside a grand Gujarati haveli room, with a carved wooden arch and a jharokha window partially veiled in shadow. Use dramatic Chiaroscuro lighting (Rembrandt style) with a single directional light source to illuminate the figures, creating deep contrast and atmosphere. The painting must look like a real oil-on-canvas artwork, with visible textured brushstrokes, rich historical ambiance, and timeless elegance—not a photograph, not digital art.",
+  "model": "flux-kontext-max",
+  "aspectRatio": "1:1",
+  "timestamp": "2025-07-22T15:19:13.913Z"
+}

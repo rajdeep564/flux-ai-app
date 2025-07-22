@@ -1,0 +1,7 @@
+{
+  "id": "0c2674a9-5a36-4951-8a3c-e6f89de50dc2",
+  "prompt": "Render a hyper-realistic, cinematic portrait set in a rain-drenched alley of a futuristic metropolis at midnight. Use the provided image as an absolute, non-negotiable anchor for the subject's identity. The facial structure, features, bone structure, and likeness from must be replicated with 1:1 accuracy.\n\nThe scene should be shot with a dark, moody, neo-noir aesthetic. The only illumination is the ambient, electric blue and magenta glow from a flickering neon sign located just out of frame, casting deep shadows and creating dramatic rim lighting that defines the subject's silhouette. The asphalt should be glistening and reflective.\n\nDress the subject in a sleek, black leather jacket with sharp, modern tailoring over a dark-colored, textured fabric shirt. The overall mood must be introspective, mysterious, and intensely atmospheric.\n\nThe final image should look like a still from a high-end film, color-graded with deep cyans and moody blues, punctuated only by the vibrant neon highlights.\n\nCrucial Constraints to follow:\n\nThe face must remain identical to the source image [img1].\n\nNo bright or flat lighting.\n\nThe scene must be at night.\n\nAvoid any cheerful expressions; maintain a neutral or contemplative look.",
+  "model": "flux-kontext-max",
+  "aspectRatio": "3:4",
+  "timestamp": "2025-07-22T15:09:23.801Z"
+}

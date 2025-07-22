@@ -1,0 +1,7 @@
+{
+  "id": "c782dffe-3489-4f17-8571-d4e949a33d8b",
+  "prompt": "Enhance the person from image into a hyper-realistic 8K photograph, maintaining absolute fidelity to their exact facial structure and likeness. The face in the output must be an identical match to the face in [img1]. For the creative modifications, place the subject in a serene Japanese garden during the soft light of a calm morning, including elements like moss-covered stones, a stone lantern, and elegant maple trees in a gentle, out-of-focus background. Style the subject in a classic, elegant beige trench coat worn over a simple, dark-colored turtleneck sweater, ensuring the texture of the coat is visible and detailed. The overall mood should be calm, sophisticated, and tranquil, with natural, diffused lighting and a sharp focus on the subject with a shallow depth of field. Do not change the face, and avoid unnatural colors, blur, or over-smoothing of skin.",
+  "model": "flux-kontext-max",
+  "aspectRatio": "1:1",
+  "timestamp": "2025-07-22T15:02:22.669Z"
+}

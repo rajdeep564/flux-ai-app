@@ -1,0 +1,7 @@
+{
+  "id": "9fd74da5-16cd-4b9e-9474-948617c14fa7",
+  "prompt": "Create a natural, high-resolution, realistic photograph of two people standing in a dimly lit, grand palace room in Ahmedabad. The man’s face must be based exactly on the attached image, preserving every detail of his facial structure, expression, and skin tone — it should look like a real photograph of him taken on location, without any alteration. He is wearing a dark, well-fitted velvet sherwani with subtle gold embroidery on the collar and cuffs. Next to him stands a poised Indian woman in an elegant deep emerald green Banarasi silk saree with a gold zari border. She wears traditional jhumka earrings and a simple gold necklace. The setting is a historical Gujarati haveli, with carved wooden arches and a jharokha window partially in shadow. Use soft, warm lighting from one side — creating depth and natural shadows, similar to indoor portrait photography with directional window light. The entire image should feel like a candid moment from a real high-end photoshoot: authentic, detailed, and completely natural — with no signs of it being artificially created.",
+  "model": "flux-kontext-max",
+  "aspectRatio": "1:1",
+  "timestamp": "2025-07-22T15:24:28.512Z"
+}
