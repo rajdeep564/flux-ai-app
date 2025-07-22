@@ -61,7 +61,7 @@ export function ModerationInfo({ reasons, className = '' }: ModerationInfoProps)
                 Content Moderated
               </h3>
               <p className="text-sm text-orange-300">
-                Your request was reviewed by our content moderation system and couldn't be processed.
+                Your request was reviewed by our content moderation system and couldn&apos;t be processed.
               </p>
             </div>
 
@@ -100,7 +100,7 @@ export function ModerationInfo({ reasons, className = '' }: ModerationInfoProps)
                 <li>• Use original, creative descriptions instead of referencing specific brands or characters</li>
                 <li>• Focus on artistic styles, colors, and compositions rather than copyrighted content</li>
                 <li>• Describe scenes, emotions, and atmospheres in your own words</li>
-                <li>• Try phrases like "in the style of" rather than naming specific artists or works</li>
+                <li>• Try phrases like &ldquo;in the style of&rdquo; rather than naming specific artists or works</li>
               </ul>
             </div>
           </div>

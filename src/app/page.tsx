@@ -22,11 +22,13 @@ export default function FluxAIGenerator() {
   const [selectedModel, setSelectedModel] = useState<FluxModel>("flux-kontext-pro")
   const [prompt, setPrompt] = useState("")
   const [selectedAspectRatio, setSelectedAspectRatio] = useState<AspectRatio>("1:1")
+  const [uploadedImages, setUploadedImages] = useState<File[]>([])
+  const [uploadedImageUrls, setUploadedImageUrls] = useState<string[]>([])
   const [uploadedImage, setUploadedImage] = useState<File | null>(null)
   const [uploadedImageUrl, setUploadedImageUrl] = useState<string>("")
   const [generatedImages, setGeneratedImages] = useState<GeneratedImage[]>([])
   const [apiKey, setApiKey] = useState<string>("")
-  const [showApiConfig, setShowApiConfig] = useState(false)
+
   const [selectedImage, setSelectedImage] = useState<GeneratedImage | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
 
@@ -143,19 +145,43 @@ export default function FluxAIGenerator() {
     }
   }
 
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0]
-    if (file) {
-      setUploadedImage(file)
-      const url = URL.createObjectURL(file)
-      setUploadedImageUrl(url)
+  const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(event.target.files || [])
+    const imageFiles = files.filter(file => file.type.startsWith('image/'))
+
+    if (imageFiles.length === 0) return;
+
+    // Store multiple images
+    setUploadedImages(imageFiles);
+
+    // Create preview URLs
+    const urls = imageFiles.map(file => URL.createObjectURL(file));
+    setUploadedImageUrls(urls);
+
+    // For backward compatibility, also set single image state
+    if (imageFiles.length === 1) {
+      setUploadedImage(imageFiles[0]);
+      setUploadedImageUrl(urls[0]);
+    } else {
+      // For multiple images, we'll use the stitched version
+      try {
+        const { FluxImageStitcher } = await import('@/lib/flux-image-stitcher');
+        const stitchedFile = await FluxImageStitcher.stitchImagesVertically(imageFiles);
+        setUploadedImage(stitchedFile);
+        const stitchedUrl = URL.createObjectURL(stitchedFile);
+        setUploadedImageUrl(stitchedUrl);
+      } catch (error) {
+        console.error('Error stitching images:', error);
+        // Fallback to first image
+        setUploadedImage(imageFiles[0]);
+        setUploadedImageUrl(urls[0]);
+      }
     }
   }
 
   const handleGenerate = async () => {
     if (!prompt.trim()) return
     if (!apiKey) {
-      setShowApiConfig(true)
       return
     }
 
@@ -243,6 +269,9 @@ export default function FluxAIGenerator() {
                 <ImageIcon className="h-5 w-5 text-white" />
                 <h1 className="text-lg font-medium text-white">Generate images from text and references</h1>
               </div>
+              <p className="text-sm text-gray-300">
+                Upload multiple images to use Flux&apos;s advanced stitching technique for better context understanding
+              </p>
             </div>
 
             {/* Main Input Area */}
@@ -254,6 +283,7 @@ export default function FluxAIGenerator() {
                     <input
                       type="file"
                       accept="image/*"
+                      multiple
                       onChange={handleImageUpload}
                       className="hidden"
                       id="image-upload"
@@ -263,7 +293,7 @@ export default function FluxAIGenerator() {
                       size="sm"
                       asChild
                       className="h-10 w-10 p-0 bg-gray-700/50 hover:bg-gray-700 border border-gray-600 backdrop-blur-sm"
-                      title="Upload reference image (optional)"
+                      title="Upload reference images (optional) - Multiple images will be stitched vertically"
                     >
                       <label htmlFor="image-upload" className="cursor-pointer">
                         <ImageIcon className="h-4 w-4 text-white" />
@@ -280,25 +310,60 @@ export default function FluxAIGenerator() {
                       className="min-h-[60px] bg-transparent border-none resize-none text-white placeholder:text-gray-300 focus-visible:ring-0 focus-visible:ring-offset-0 p-0"
                     />
 
-                    {/* Uploaded Image Preview */}
-                    {uploadedImageUrl && (
-                      <div className="mt-4 relative inline-block">
-                        <img
-                          src={uploadedImageUrl}
-                          alt="Uploaded reference"
-                          className="h-20 w-20 object-cover rounded-lg border border-gray-600"
-                        />
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => {
-                            setUploadedImage(null)
-                            setUploadedImageUrl("")
-                          }}
-                          className="absolute -top-2 -right-2 h-6 w-6 p-0 bg-red-600 hover:bg-red-700 text-white rounded-full"
-                        >
-                          ×
-                        </Button>
+                    {/* Uploaded Images Preview */}
+                    {uploadedImages.length > 0 && (
+                      <div className="mt-4 space-y-3">
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs text-gray-300">
+                            {uploadedImages.length === 1
+                              ? '1 image uploaded'
+                              : `${uploadedImages.length} images uploaded (will be stitched vertically)`
+                            }
+                          </span>
+                        </div>
+
+                        <div className="flex flex-wrap gap-2">
+                          {uploadedImageUrls.map((url, index) => (
+                            <div key={index} className="relative">
+                              <img
+                                src={url}
+                                alt={`Uploaded reference ${index + 1}`}
+                                className="h-16 w-16 object-cover rounded-lg border border-gray-600"
+                              />
+                              <div className="absolute -top-1 -right-1 w-4 h-4 bg-gray-700 rounded-full flex items-center justify-center">
+                                <span className="text-xs text-white">{index + 1}</span>
+                              </div>
+                            </div>
+                          ))}
+
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => {
+                              // Clean up URLs
+                              uploadedImageUrls.forEach(url => URL.revokeObjectURL(url));
+                              if (uploadedImageUrl) URL.revokeObjectURL(uploadedImageUrl);
+
+                              // Reset state
+                              setUploadedImages([]);
+                              setUploadedImageUrls([]);
+                              setUploadedImage(null);
+                              setUploadedImageUrl("");
+                            }}
+                            className="h-16 w-16 border-2 border-dashed border-gray-600 text-gray-400 hover:text-red-400 hover:border-red-400 rounded-lg"
+                            title="Clear all images"
+                          >
+                            ×
+                          </Button>
+                        </div>
+
+                        {uploadedImages.length > 1 && (
+                          <div className="bg-blue-900/20 rounded-lg p-3 border border-blue-800/50">
+                            <p className="text-xs text-blue-300">
+                              <strong>Multiple Images:</strong> Your {uploadedImages.length} images will be stitched vertically using Flux&apos;s technique for better results.
+                            </p>
+                          </div>
+                        )}
                       </div>
                     )}
                   </div>
@@ -369,10 +434,15 @@ export default function FluxAIGenerator() {
                 </span>
                 <span>•</span>
                 <span>Aspect Ratio: {selectedAspectRatio}</span>
-                {uploadedImage && (
+                {uploadedImages.length > 0 && (
                   <>
                     <span>•</span>
-                    <span>Reference: {uploadedImage.name}</span>
+                    <span>
+                      Reference: {uploadedImages.length === 1
+                        ? uploadedImages[0].name
+                        : `${uploadedImages.length} images (stitched)`
+                      }
+                    </span>
                   </>
                 )}
               </div>

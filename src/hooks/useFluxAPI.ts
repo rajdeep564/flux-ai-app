@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import FluxAPIService, { 
   FluxModel, 
   AspectRatio, 
@@ -24,7 +24,44 @@ export function useFluxAPI({ apiKey }: UseFluxAPIProps) {
   const [generationProgress, setGenerationProgress] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
 
-  const fluxService = new FluxAPIService(apiKey);
+  const fluxService = useMemo(() => new FluxAPIService(apiKey), [apiKey]);
+
+  const pollForResult = useCallback(async (pollingUrl: string, maxAttempts = 60, interval = 2000) => {
+    for (let attempt = 0; attempt < maxAttempts; attempt++) {
+      try {
+        const result = await fluxService.pollResult(pollingUrl);
+
+        console.log(`Polling attempt ${attempt + 1}: Status = ${result.status}`, result);
+
+        // Check for completion statuses
+        if (result.status === 'Ready' || result.status === 'completed' ||
+            result.status === 'failed' || result.status === 'Task not found' ||
+            result.status === 'Request Moderated') {
+          console.log('Polling completed with status:', result.status);
+          return result;
+        }
+
+        // Update progress with more detailed information
+        const progressText = result.progress
+          ? `Generating image... ${Math.round(result.progress * 100)}% (${attempt + 1}/${maxAttempts})`
+          : `Generating image... (${attempt + 1}/${maxAttempts})`;
+
+        setGenerationProgress(progressText);
+
+        // Wait before next poll
+        await new Promise(resolve => setTimeout(resolve, interval));
+      } catch (error) {
+        console.error('Polling error:', error);
+        if (attempt === maxAttempts - 1) {
+          throw new Error('Polling failed after maximum attempts');
+        }
+        // Wait before retry
+        await new Promise(resolve => setTimeout(resolve, interval));
+      }
+    }
+
+    throw new Error('Generation timed out');
+  }, [fluxService, setGenerationProgress]);
 
   const generateImage = useCallback(async (options: GenerationOptions): Promise<GeneratedImage | null> => {
     if (!apiKey) {
@@ -144,44 +181,9 @@ export function useFluxAPI({ apiKey }: UseFluxAPIProps) {
       setGenerationProgress('');
       return null;
     }
-  }, [apiKey, fluxService]);
+  }, [apiKey, fluxService, pollForResult]);
 
-  const pollForResult = async (pollingUrl: string, maxAttempts = 60, interval = 2000) => {
-    for (let attempt = 0; attempt < maxAttempts; attempt++) {
-      try {
-        const result = await fluxService.pollResult(pollingUrl);
 
-        console.log(`Polling attempt ${attempt + 1}: Status = ${result.status}`, result);
-
-        // Check for completion statuses
-        if (result.status === 'Ready' || result.status === 'completed' ||
-            result.status === 'failed' || result.status === 'Task not found' ||
-            result.status === 'Request Moderated') {
-          console.log('Polling completed with status:', result.status);
-          return result;
-        }
-
-        // Update progress with more detailed information
-        const progressText = result.progress
-          ? `Generating image... ${Math.round(result.progress * 100)}% (${attempt + 1}/${maxAttempts})`
-          : `Generating image... (${attempt + 1}/${maxAttempts})`;
-
-        setGenerationProgress(progressText);
-
-        // Wait before next poll
-        await new Promise(resolve => setTimeout(resolve, interval));
-      } catch (error) {
-        console.error('Polling error:', error);
-        if (attempt === maxAttempts - 1) {
-          throw new Error('Polling failed after maximum attempts');
-        }
-        // Wait before retry
-        await new Promise(resolve => setTimeout(resolve, interval));
-      }
-    }
-
-    throw new Error('Generation timed out');
-  };
 
 
 
