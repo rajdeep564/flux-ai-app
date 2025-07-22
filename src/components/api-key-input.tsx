@@ -48,13 +48,13 @@ export function ApiKeyInput({ onApiKeySet, currentApiKey }: ApiKeyInputProps) {
 
   if (!isEditing && currentApiKey) {
     return (
-      <Card className="bg-gray-900 border-gray-800">
+      <Card className="bg-gray-800/50 border-gray-700 backdrop-blur-sm">
         <CardContent className="p-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Key className="h-4 w-4 text-green-500" />
-              <span className="text-sm text-gray-300">API Key configured</span>
-              <span className="text-xs text-gray-500">
+              <Key className="h-4 w-4 text-green-400" />
+              <span className="text-sm text-white">API Key configured</span>
+              <span className="text-xs text-gray-200">
                 (***{currentApiKey.slice(-4)})
               </span>
             </div>
@@ -63,7 +63,7 @@ export function ApiKeyInput({ onApiKeySet, currentApiKey }: ApiKeyInputProps) {
                 variant="ghost"
                 size="sm"
                 onClick={handleEdit}
-                className="text-gray-400 hover:text-white"
+                className="text-gray-200 hover:text-white"
               >
                 Edit
               </Button>
@@ -71,7 +71,7 @@ export function ApiKeyInput({ onApiKeySet, currentApiKey }: ApiKeyInputProps) {
                 variant="ghost"
                 size="sm"
                 onClick={handleClear}
-                className="text-red-400 hover:text-red-300"
+                className="text-red-300 hover:text-white hover:bg-red-600/20"
               >
                 Clear
               </Button>
@@ -83,7 +83,7 @@ export function ApiKeyInput({ onApiKeySet, currentApiKey }: ApiKeyInputProps) {
   }
 
   return (
-    <Card className="bg-gray-900 border-gray-800">
+    <Card className="bg-gray-800/50 border-gray-700 backdrop-blur-sm">
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-white">
           <Key className="h-5 w-5" />
@@ -92,7 +92,7 @@ export function ApiKeyInput({ onApiKeySet, currentApiKey }: ApiKeyInputProps) {
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="space-y-2">
-          <Label htmlFor="api-key" className="text-gray-300">
+          <Label htmlFor="api-key" className="text-white">
             API Key
           </Label>
           <div className="relative">
@@ -102,19 +102,19 @@ export function ApiKeyInput({ onApiKeySet, currentApiKey }: ApiKeyInputProps) {
               value={apiKey}
               onChange={(e) => setApiKey(e.target.value)}
               placeholder="Enter your Flux API key"
-              className="bg-gray-800 border-gray-700 text-white pr-10"
+              className="bg-gray-700/50 border-gray-600 text-white placeholder:text-gray-300 pr-10 backdrop-blur-sm"
             />
             <Button
               type="button"
               variant="ghost"
               size="sm"
-              className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+              className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent text-gray-200 hover:text-white"
               onClick={() => setShowApiKey(!showApiKey)}
             >
               {showApiKey ? (
-                <EyeOff className="h-4 w-4 text-gray-400" />
+                <EyeOff className="h-4 w-4" />
               ) : (
-                <Eye className="h-4 w-4 text-gray-400" />
+                <Eye className="h-4 w-4" />
               )}
             </Button>
           </div>
@@ -123,7 +123,7 @@ export function ApiKeyInput({ onApiKeySet, currentApiKey }: ApiKeyInputProps) {
           <Button
             onClick={handleSave}
             disabled={!apiKey.trim()}
-            className="bg-white text-black hover:bg-gray-200"
+            className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg"
           >
             Save API Key
           </Button>
@@ -131,13 +131,13 @@ export function ApiKeyInput({ onApiKeySet, currentApiKey }: ApiKeyInputProps) {
             <Button
               variant="ghost"
               onClick={() => setIsEditing(false)}
-              className="text-gray-400 hover:text-white"
+              className="text-gray-200 hover:text-white"
             >
               Cancel
             </Button>
           )}
         </div>
-        <p className="text-xs text-gray-500">
+        <p className="text-xs text-gray-300">
           Your API key will be stored locally in your browser and used to authenticate with the Flux API.
         </p>
       </CardContent>

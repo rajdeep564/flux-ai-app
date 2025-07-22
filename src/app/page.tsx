@@ -262,10 +262,11 @@ export default function FluxAIGenerator() {
                       variant="ghost"
                       size="sm"
                       asChild
-                      className="h-10 w-10 p-0 bg-gray-800 hover:bg-gray-700 border border-gray-700"
+                      className="h-10 w-10 p-0 bg-gray-700/50 hover:bg-gray-700 border border-gray-600 backdrop-blur-sm"
+                      title="Upload reference image (optional)"
                     >
                       <label htmlFor="image-upload" className="cursor-pointer">
-                        <ImageIcon className="h-4 w-4" />
+                        <ImageIcon className="h-4 w-4 text-white" />
                       </label>
                     </Button>
                   </div>
@@ -283,9 +284,9 @@ export default function FluxAIGenerator() {
                     {uploadedImageUrl && (
                       <div className="mt-4 relative inline-block">
                         <img
-                          src={uploadedImageUrl || "/placeholder.svg"}
+                          src={uploadedImageUrl}
                           alt="Uploaded reference"
-                          className="h-20 w-20 object-cover rounded-lg border border-gray-700"
+                          className="h-20 w-20 object-cover rounded-lg border border-gray-600"
                         />
                         <Button
                           variant="ghost"
@@ -294,7 +295,7 @@ export default function FluxAIGenerator() {
                             setUploadedImage(null)
                             setUploadedImageUrl("")
                           }}
-                          className="absolute -top-2 -right-2 h-6 w-6 p-0 bg-gray-800 hover:bg-gray-700 rounded-full"
+                          className="absolute -top-2 -right-2 h-6 w-6 p-0 bg-red-600 hover:bg-red-700 text-white rounded-full"
                         >
                           ×
                         </Button>
@@ -432,7 +433,7 @@ export default function FluxAIGenerator() {
               <div className="flex items-center justify-between">
                 <h2 className="text-2xl font-bold text-white">Generated Images</h2>
                 <div className="flex items-center gap-3">
-                  <Badge variant="secondary" className="bg-gray-800 text-gray-300">
+                  <Badge variant="secondary" className="bg-gray-700/50 text-white border-gray-600">
                     {generatedImages.length} images
                   </Badge>
                   {generatedImages.length > 0 && (
@@ -458,7 +459,7 @@ export default function FluxAIGenerator() {
                           }
                         }
                       }}
-                      className="text-red-400 hover:text-red-300 hover:bg-red-900/20"
+                      className="text-red-300 hover:text-white hover:bg-red-600/20 backdrop-blur-sm"
                     >
                       <Trash2 className="h-4 w-4 mr-2" />
                       Clear All
@@ -468,11 +469,11 @@ export default function FluxAIGenerator() {
               </div>
 
               {generatedImages.length === 0 ? (
-                <Card className="bg-gray-900 border-gray-800">
+                <Card className="bg-gray-800/50 border-gray-700 backdrop-blur-sm">
                   <CardContent className="p-12 text-center">
-                    <ImageIcon className="h-16 w-16 text-gray-600 mx-auto mb-4" />
-                    <h3 className="text-lg font-medium text-gray-300 mb-2">No images generated yet</h3>
-                    <p className="text-gray-500">Start generating images to build your library</p>
+                    <ImageIcon className="h-16 w-16 text-gray-400 mx-auto mb-4" />
+                    <h3 className="text-lg font-medium text-white mb-2">No images generated yet</h3>
+                    <p className="text-gray-200">Start generating images to build your library</p>
                   </CardContent>
                 </Card>
               ) : (
