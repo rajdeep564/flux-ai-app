@@ -193,7 +193,7 @@ export default function FluxAIGenerator() {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
       <ToastContainer toasts={toasts} onRemove={removeToast} />
       <ImageModal
         image={selectedImage}
@@ -204,17 +204,23 @@ export default function FluxAIGenerator() {
         onDelete={deleteImage}
       />
       <div className="max-w-4xl mx-auto px-4 py-8">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold mb-2 text-white">FLUX AI Image Generator</h1>
+          <p className="text-gray-200">Generate stunning images with FLUX.1 Kontext models</p>
+        </div>
+
         <Tabs defaultValue={!apiKey ? "config" : "generate"} className="w-full">
-          <TabsList className="grid w-full grid-cols-3 mb-8 bg-gray-900 border-gray-800">
-            <TabsTrigger value="config" className="flex items-center gap-2 data-[state=active]:bg-gray-800">
+          <TabsList className="grid w-full grid-cols-3 mb-8 bg-gray-800/50 border border-gray-700 backdrop-blur-sm">
+            <TabsTrigger value="config" className="flex items-center gap-2 text-gray-200 data-[state=active]:bg-gray-700 data-[state=active]:text-white">
               <Settings className="h-4 w-4" />
               Config
             </TabsTrigger>
-            <TabsTrigger value="generate" className="flex items-center gap-2 data-[state=active]:bg-gray-800">
-              <ImageIcon className="h-5 w-5 text-white" />
+            <TabsTrigger value="generate" className="flex items-center gap-2 text-gray-200 data-[state=active]:bg-gray-700 data-[state=active]:text-white">
+              <ImageIcon className="h-5 w-5" />
               Generate
             </TabsTrigger>
-            <TabsTrigger value="library" className="flex items-center gap-2 data-[state=active]:bg-gray-800">
+            <TabsTrigger value="library" className="flex items-center gap-2 text-gray-200 data-[state=active]:bg-gray-700 data-[state=active]:text-white">
               <ImageIcon className="h-4 w-4" />
               Library ({generatedImages.length})
             </TabsTrigger>
@@ -223,9 +229,11 @@ export default function FluxAIGenerator() {
           <TabsContent value="config" className="space-y-6">
             <div className="text-center mb-6">
               <h2 className="text-2xl font-bold text-white mb-2">API Configuration</h2>
-              <p className="text-gray-400">Configure your Flux API key to start generating images</p>
+              <p className="text-gray-200">Configure your Flux API key to start generating images</p>
             </div>
-            <ApiKeyInput onApiKeySet={setApiKey} currentApiKey={apiKey} />
+            <div className="bg-gray-800/50 border border-gray-700 rounded-xl p-6 backdrop-blur-sm">
+              <ApiKeyInput onApiKeySet={setApiKey} currentApiKey={apiKey} />
+            </div>
           </TabsContent>
 
           <TabsContent value="generate" className="space-y-8">
@@ -239,7 +247,7 @@ export default function FluxAIGenerator() {
 
             {/* Main Input Area */}
             <div className="relative">
-              <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6">
+              <div className="bg-gray-800/50 border border-gray-700 rounded-2xl p-6 backdrop-blur-sm">
                 <div className="flex items-start gap-4">
                   {/* Upload Button */}
                   <div className="flex-shrink-0">
@@ -265,10 +273,10 @@ export default function FluxAIGenerator() {
                   {/* Text Input */}
                   <div className="flex-1">
                     <Textarea
-                      placeholder="Enter a text prompt or drop reference images"
+                      placeholder="Enter a text prompt to describe your desired image..."
                       value={prompt}
                       onChange={(e) => setPrompt(e.target.value)}
-                      className="min-h-[60px] bg-transparent border-none resize-none text-white placeholder:text-gray-400 focus-visible:ring-0 focus-visible:ring-offset-0 p-0"
+                      className="min-h-[60px] bg-transparent border-none resize-none text-white placeholder:text-gray-300 focus-visible:ring-0 focus-visible:ring-offset-0 p-0"
                     />
 
                     {/* Uploaded Image Preview */}
@@ -298,7 +306,7 @@ export default function FluxAIGenerator() {
                   <div className="flex items-center gap-2">
                     {/* Model Selection */}
                     <Select value={selectedModel} onValueChange={(value: FluxModel) => setSelectedModel(value)}>
-                      <SelectTrigger className="bg-gray-800 border-gray-700 text-white hover:bg-gray-700 min-w-[180px]">
+                      <SelectTrigger className="bg-gray-700/50 border-gray-600 text-white hover:bg-gray-700 min-w-[180px] backdrop-blur-sm">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent className="bg-gray-800 border-gray-700">
@@ -317,13 +325,13 @@ export default function FluxAIGenerator() {
                         <Button
                           variant="ghost"
                           size="sm"
-                          className="h-10 w-10 p-0 bg-gray-800 hover:bg-gray-700 border border-gray-700"
+                          className="h-10 w-10 p-0 bg-gray-700/50 hover:bg-gray-700 border border-gray-600 backdrop-blur-sm"
                         >
-                          <MoreHorizontal className="h-4 w-4" />
+                          <MoreHorizontal className="h-4 w-4 text-white" />
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end" className="bg-gray-800 border-gray-700">
-                        <div className="px-2 py-1 text-xs font-medium text-gray-400">Aspect Ratio</div>
+                        <div className="px-2 py-1 text-xs font-medium text-gray-300">Aspect Ratio</div>
                         {aspectRatios.map((ratio) => (
                           <DropdownMenuItem
                             key={ratio}
@@ -340,11 +348,11 @@ export default function FluxAIGenerator() {
                     <Button
                       onClick={handleGenerate}
                       disabled={!prompt.trim() || isGenerating || !apiKey}
-                      className="h-10 w-10 p-0 bg-white hover:bg-gray-200 text-black rounded-full disabled:opacity-50"
+                      className="h-10 w-10 p-0 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-full disabled:opacity-50 shadow-lg"
                       title={!apiKey ? "Configure API key first" : "Generate image"}
                     >
                       {isGenerating ? (
-                        <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin" />
+                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
                       ) : (
                         <Send className="h-4 w-4" />
                       )}
@@ -354,7 +362,7 @@ export default function FluxAIGenerator() {
               </div>
 
               {/* Current Settings Display */}
-              <div className="mt-4 flex items-center gap-4 text-sm text-gray-400">
+              <div className="mt-4 flex items-center gap-4 text-sm text-gray-300">
                 <span>
                   Model: {selectedModel === "flux-kontext-pro" ? "FLUX.1 Kontext [pro]" : "FLUX.1 Kontext [max]"}
                 </span>
